@@ -151,6 +151,16 @@ def test_quoted_value():
     )
 
 
+# 닫히지 않은 따옴표가 Redis 스타일 문법 오류로 반환되는지 테스트한다.
+def test_syntax_error():
+    handler = create_handler()
+
+    assert (
+        handler.execute('SET message "Hello World')
+        == "(error) ERR syntax error"
+    )
+
+
 # 모든 명령 처리 테스트를 실행한다.
 def main():
     test_set_get()
@@ -164,6 +174,7 @@ def main():
     test_errors()
     test_integer_error()
     test_quoted_value()
+    test_syntax_error()
 
     print("CommandHandler 테스트 통과!")
 

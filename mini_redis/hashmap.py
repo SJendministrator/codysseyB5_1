@@ -13,6 +13,9 @@ class HashMapEntry:
 class HashMap:
     # 지정된 크기의 버킷 배열을 생성하고 HashMap을 초기화한다.
     def __init__(self, initial_capacity=8):
+        if initial_capacity < 1:
+            raise ValueError("initial_capacity must be at least 1")
+
         self._buckets = [None] * initial_capacity
         self._size = 0
         self._capacity = initial_capacity
