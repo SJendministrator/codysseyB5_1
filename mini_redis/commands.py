@@ -211,7 +211,12 @@ class CommandHandler:
 
     # 하나의 명령 문자열을 실행하고 결과를 반환한다.
     def execute(self, line):
-        parts = self._parse(line)
+        # CommandHandler는 CLI 밖에서도 사용할 수 있으므로, 따옴표가 닫히지
+        # 않은 입력도 예외를 밖으로 전파하지 않고 Redis 형식의 오류로 반환한다.
+        try:
+            parts = self._parse(line)
+        except ValueError as error:
+            return f"(error) {error}"
 
         if not parts:
             return ""

@@ -71,6 +71,16 @@ def test_resize():
         assert hashmap.get(f"key{number}") == f"value{number}"
 
 
+# 0 크기 버킷 테이블이 나눗셈 오류를 만들지 않도록 입력을 검증하는지 테스트한다.
+def test_invalid_capacity():
+    try:
+        HashMap(initial_capacity=0)
+    except ValueError:
+        return
+
+    assert False, "initial_capacity=0 must raise ValueError"
+
+
 # HashMap의 전체 테스트를 실행한다.
 def main():
     test_basic_operations()
@@ -78,6 +88,7 @@ def main():
     test_remove()
     test_keys()
     test_resize()
+    test_invalid_capacity()
 
     print("HashMap 테스트 통과!")
 
